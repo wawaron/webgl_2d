@@ -8,7 +8,7 @@ function getGL() { return mGL; }
 
 let mShader = null;
 function createShader() {
-    mShader = new SimpleShader("VertexShader", "FragmentShader");
+    mShader = new SimpleShader("src/glsl/simple_vs.glsl", "src/glsl/white_fs.glsl");
 }
 
 function initWebGL(htmlCanvasID) {

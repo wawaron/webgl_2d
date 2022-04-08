@@ -4,13 +4,13 @@ import * as core from "./core.js";
 import * as vertexBuffer from "./vertex_buffer.js";
 
 class SimpleShader {
-    constructor(vertexShaderID, fragmentShaderID) {
+    constructor(vertexShaderPath, fragmentShaderPath) {
         this.mCompileShader = null;
         this.mVertexPositionRef = null;
 
         let gl = core.getGL();
-        this.mVertexShader = loadAndCompileShader(vertexShaderID, gl.VERTEX_SHADER);
-        this.mFragmentShader = loadAndCompileShader(fragmentShaderID, gl.FRAGMENT_SHADER);
+        this.mVertexShader = loadAndCompileShader(vertexShaderPath, gl.VERTEX_SHADER);
+        this.mFragmentShader = loadAndCompileShader(fragmentShaderPath, gl.FRAGMENT_SHADER);
 
         this.mCompiledShader = gl.createProgram();
         gl.attachShader(this.mCompiledShader, this.mVertexShader);
@@ -18,7 +18,7 @@ class SimpleShader {
         gl.linkProgram(this.mCompiledShader);
 
         if (!gl.getProgramParameter(this.mCompiledShader, gl.LINK_STATUS)) {
-            throw new Error("Error linking shader");
+            throw new Error("Failed to link shader: " + vertexShaderPath + " <--> " + fragmentShaderPath);
         }
 
         this.mVertexPositionRef = gl.getAttribLocation(this.mCompiledShader, "aVertexPosition");
@@ -33,12 +33,23 @@ class SimpleShader {
     }
 }
 
-function loadAndCompileShader(id, shaderType) {
+function loadAndCompileShader(filePath, shaderType) {
+    let xmlReq = null;
     let shaderSource = null;
     let compiledShader = null;
 
-    let shaderText = document.getElementById(id);
-    shaderSource = shaderText.firstChild.textContent;
+    xmlReq = new XMLHttpRequest();
+    xmlReq.open("GET", filePath, false);
+    try {
+        xmlReq.send();
+    } catch (error) {
+        throw new Error("The index.html file must be loaded from a web-server");
+    }
+
+    shaderSource = xmlReq.responseText;
+    if (shaderSource === null) {
+        throw new Error("Failed to load shader: " + filePath);
+    }
 
     let gl = core.getGL();
     compiledShader = gl.createShader(shaderType);
