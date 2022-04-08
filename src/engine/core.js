@@ -1,10 +1,15 @@
 "use strict";
 
+import SimpleShader from "./simple_shader.js";
 import * as vertexBuffer from "./vertex_buffer.js";
-import * as simpleShader from "./shader_support.js";
 
 let mGL = null;
 function getGL() { return mGL; }
+
+let mShader = null;
+function createShader() {
+    mShader = new SimpleShader("VertexShader", "FragmentShader");
+}
 
 function initWebGL(htmlCanvasID) {
     let canvas = document.getElementById(htmlCanvasID);
@@ -13,25 +18,22 @@ function initWebGL(htmlCanvasID) {
         document.write("<br><b>WebGL2 is not supported by the browser</b>");
         return;
     }
-    mGL.clearColor(0.0, 0.0, 0.0, 1.0);
-
-    vertexBuffer.init();
-    simpleShader.init("VertexShader", "FragmentShader");
 }
 
-function clearCanvas() {
+function init(htmlCanvasID) {
+    initWebGL(htmlCanvasID);
+    vertexBuffer.init();
+    createShader();
+}
+
+function clearCanvas(color) {
+    mGL.clearColor(color[0], color[1], color[2], color[3]);
     mGL.clear(mGL.COLOR_BUFFER_BIT);
 }
 
 function drawSquare() {
-    simpleShader.activate();
+    mShader.activate();
     mGL.drawArrays(mGL.TRIANGLE_STRIP, 0, 4);
 }
 
-window.onload = function() {
-    initWebGL("GLCanvas");
-    clearCanvas();
-    drawSquare();
-};
-
-export { getGL };
+export { clearCanvas, drawSquare, getGL, init };
