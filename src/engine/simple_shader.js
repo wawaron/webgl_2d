@@ -5,8 +5,9 @@ import * as vertexBuffer from "./vertex_buffer.js";
 
 class SimpleShader {
     constructor(vertexShaderPath, fragmentShaderPath) {
-        this.mCompileShader = null;
+        this.mCompiledShader = null;
         this.mVertexPositionRef = null;
+        this.mPixelColorRef = null;
 
         let gl = core.getGL();
         this.mVertexShader = loadAndCompileShader(vertexShaderPath, gl.VERTEX_SHADER);
@@ -22,14 +23,16 @@ class SimpleShader {
         }
 
         this.mVertexPositionRef = gl.getAttribLocation(this.mCompiledShader, "aVertexPosition");
+        this.mPixelColorRef = gl.getUniformLocation(this.mCompiledShader, "uPixelColor");
     }
 
-    activate() {
+    activate(pixelColor) {
         let gl = core.getGL();
         gl.useProgram(this.mCompiledShader);
         gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.get());
         gl.vertexAttribPointer(this.mVertexPositionRef, 3, gl.FLOAT, false, 0, 0);
         gl.enableVertexAttribArray(this.mVertexPositionRef);
+        gl.uniform4fv(this.mPixelColorRef, pixelColor);
     }
 }
 

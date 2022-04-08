@@ -8,7 +8,7 @@ function getGL() { return mGL; }
 
 let mShader = null;
 function createShader() {
-    mShader = new SimpleShader("src/glsl/simple_vs.glsl", "src/glsl/white_fs.glsl");
+    mShader = new SimpleShader("src/glsl/simple_vs.glsl", "src/glsl/simple_fs.glsl");
 }
 
 function initWebGL(htmlCanvasID) {
@@ -31,8 +31,8 @@ function clearCanvas(color) {
     mGL.clear(mGL.COLOR_BUFFER_BIT);
 }
 
-function drawSquare() {
-    mShader.activate();
+function drawSquare(color) {
+    mShader.activate(color);
     mGL.drawArrays(mGL.TRIANGLE_STRIP, 0, 4);
 }
 

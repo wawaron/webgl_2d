@@ -6,7 +6,7 @@ class Client {
     constructor(htmlCanvasID) {
         engine.init(htmlCanvasID);
         engine.clearCanvas([0.0, 0.0, 0.0, 1.0]);
-        engine.drawSquare();
+        engine.drawSquare([1.0, 1.0, 1.0, 1.0]);
     }
 }
 
