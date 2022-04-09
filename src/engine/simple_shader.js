@@ -1,7 +1,7 @@
 "use strict";
 
-import * as core from "./core.js";
-import * as vertexBuffer from "./vertex_buffer.js";
+import * as glSys from "./core/gl.js";
+import * as vertexBuffer from "./core/vertex_buffer.js";
 
 class SimpleShader {
     constructor(vertexShaderPath, fragmentShaderPath) {
@@ -9,7 +9,7 @@ class SimpleShader {
         this.mVertexPositionRef = null;
         this.mPixelColorRef = null;
 
-        let gl = core.getGL();
+        let gl = glSys.get();
         this.mVertexShader = loadAndCompileShader(vertexShaderPath, gl.VERTEX_SHADER);
         this.mFragmentShader = loadAndCompileShader(fragmentShaderPath, gl.FRAGMENT_SHADER);
 
@@ -27,7 +27,7 @@ class SimpleShader {
     }
 
     activate(pixelColor) {
-        let gl = core.getGL();
+        let gl = glSys.get();
         gl.useProgram(this.mCompiledShader);
         gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.get());
         gl.vertexAttribPointer(this.mVertexPositionRef, 3, gl.FLOAT, false, 0, 0);
@@ -54,7 +54,7 @@ function loadAndCompileShader(filePath, shaderType) {
         throw new Error("Failed to load shader: " + filePath);
     }
 
-    let gl = core.getGL();
+    let gl = glSys.get();
     compiledShader = gl.createShader(shaderType);
     gl.shaderSource(compiledShader, shaderSource);
     gl.compileShader(compiledShader);
