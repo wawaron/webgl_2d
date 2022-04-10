@@ -8,6 +8,7 @@ class SimpleShader {
         this.mCompiledShader = null;
         this.mVertexPositionRef = null;
         this.mPixelColorRef = null;
+        this.mModelMatrixRef = null;
 
         let gl = glSys.get();
         this.mVertexShader = loadAndCompileShader(vertexShaderPath, gl.VERTEX_SHADER);
@@ -24,15 +25,17 @@ class SimpleShader {
 
         this.mVertexPositionRef = gl.getAttribLocation(this.mCompiledShader, "aVertexPosition");
         this.mPixelColorRef = gl.getUniformLocation(this.mCompiledShader, "uPixelColor");
+        this.mModelMatrixRef = gl.getUniformLocation(this.mCompiledShader, "uModelTransformMatrix");
     }
 
-    activate(pixelColor) {
+    activate(pixelColor, trsMatrix) {
         let gl = glSys.get();
         gl.useProgram(this.mCompiledShader);
         gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer.get());
         gl.vertexAttribPointer(this.mVertexPositionRef, 3, gl.FLOAT, false, 0, 0);
         gl.enableVertexAttribArray(this.mVertexPositionRef);
         gl.uniform4fv(this.mPixelColorRef, pixelColor);
+        gl.uniformMatrix4fv(this.mModelMatrixRef, false, trsMatrix);
     }
 }
 

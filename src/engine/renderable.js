@@ -12,9 +12,9 @@ class Renderable {
     getColor() { return this.mColor; }
     setColor(color) { this.mColor = color; }
 
-    draw() {
+    draw(trsMatrix) {
         let gl = glSys.get();
-        this.mShader.activate(this.mColor);
+        this.mShader.activate(this.mColor, trsMatrix);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     }
 }
