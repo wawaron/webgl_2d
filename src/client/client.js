@@ -13,17 +13,17 @@ class Client {
 
         engine.clearCanvas([0.0, 0.0, 0.0, 1.0]);
 
-        let trsMatrix = mat4.create();
+        this.mWhiteSq.getTransform().setPosition(-0.25, 0.25);
+        this.mWhiteSq.getTransform().setRotationInRad(0.2);
+        this.mWhiteSq.getTransform().setSize(1.2, 1.2);
+        this.mWhiteSq.draw();
 
-        mat4.translate(trsMatrix, trsMatrix, vec3.fromValues(-0.25, 0.25, 0.0));
-        mat4.rotateZ(trsMatrix, trsMatrix, 0.2);
-        mat4.scale(trsMatrix, trsMatrix, vec3.fromValues(1.2, 1.2, 1.0));
-        this.mWhiteSq.draw(trsMatrix);
-
-        mat4.translate(trsMatrix, trsMatrix, vec3.fromValues(0.25, -0.25, 0.0));
-        mat4.rotateZ(trsMatrix, trsMatrix, -.785);
-        mat4.scale(trsMatrix, trsMatrix, vec3.fromValues(0.4, 0.4, 1.0));
-        this.mRedSq.draw(trsMatrix);
+        this.mRedSq.getTransform().setXPos(0.25);
+        this.mRedSq.getTransform().setYPos(-0.25);
+        this.mRedSq.getTransform().setRotationInDegree(45);
+        this.mRedSq.getTransform().setWidth(0.4);
+        this.mRedSq.getTransform().setHeight(0.4);
+        this.mRedSq.draw();
     }
 }
 
