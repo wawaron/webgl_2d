@@ -16,9 +16,9 @@ class Renderable {
 
     getTransform() { return this.mTransform; }
 
-    draw() {
+    draw(cameraMatrix) {
         let gl = glSys.get();
-        this.mShader.activate(this.mColor, this.mTransform.getTRSMatrix());
+        this.mShader.activate(this.mColor, this.mTransform.getTRSMatrix(), cameraMatrix);
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
     }
 }
