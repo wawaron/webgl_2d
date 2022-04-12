@@ -40,17 +40,23 @@ class Client {
     update() {
         let whiteTransform = this.mWhiteSq.getTransform();
         let deltaX = 0.05;
-        if (whiteTransform.getXPos() > 30) {
-            whiteTransform.setPosition(10, 60);
+        if (engine.input.isKeyPressed(engine.input.keys.Right)) {
+            if (whiteTransform.getXPos() > 30) {
+                whiteTransform.setPosition(10, 60);
+            }
+            whiteTransform.incXPosBy(deltaX);
         }
-        whiteTransform.incXPosBy(deltaX);
-        whiteTransform.incRotationByDegree(1);
+        if (engine.input.isKeyClicked(engine.input.keys.Up)) {
+            whiteTransform.incRotationByDegree(1);
+        }
 
         let redTransform = this.mRedSq.getTransform();
-        if (redTransform.getWidth() > 5) {
-            redTransform.setSize(2, 2);
+        if (engine.input.isKeyPressed(engine.input.keys.Down)) {
+            if (redTransform.getWidth() > 5) {
+                redTransform.setSize(2, 2);
+            }
+            redTransform.incSizeBy(0.05);
         }
-        redTransform.incSizeBy(0.05);
     }
 }
 
