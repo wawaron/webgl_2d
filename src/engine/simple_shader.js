@@ -2,6 +2,7 @@
 
 import * as glSys from "./core/gl.js";
 import * as vertexBuffer from "./core/vertex_buffer.js";
+import * as text from "./resources/text.js";
 
 class SimpleShader {
     constructor(vertexShaderPath, fragmentShaderPath) {
@@ -12,8 +13,8 @@ class SimpleShader {
         this.mCameraMatrixRef = null;
 
         let gl = glSys.get();
-        this.mVertexShader = loadAndCompileShader(vertexShaderPath, gl.VERTEX_SHADER);
-        this.mFragmentShader = loadAndCompileShader(fragmentShaderPath, gl.FRAGMENT_SHADER);
+        this.mVertexShader = compileShader(vertexShaderPath, gl.VERTEX_SHADER);
+        this.mFragmentShader = compileShader(fragmentShaderPath, gl.FRAGMENT_SHADER);
 
         this.mCompiledShader = gl.createProgram();
         gl.attachShader(this.mCompiledShader, this.mVertexShader);
@@ -42,22 +43,13 @@ class SimpleShader {
     }
 }
 
-function loadAndCompileShader(filePath, shaderType) {
-    let xmlReq = null;
+function compileShader(filePath, shaderType) {
     let shaderSource = null;
     let compiledShader = null;
 
-    xmlReq = new XMLHttpRequest();
-    xmlReq.open("GET", filePath, false);
-    try {
-        xmlReq.send();
-    } catch (error) {
-        throw new Error("The index.html file must be loaded from a web-server");
-    }
-
-    shaderSource = xmlReq.responseText;
+    shaderSource = text.get(filePath);
     if (shaderSource === null) {
-        throw new Error("Failed to load shader: " + filePath);
+        throw new Error("Error: \"" + filePath + "\" is not loaded");
     }
 
     let gl = glSys.get();

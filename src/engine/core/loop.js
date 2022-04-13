@@ -1,6 +1,7 @@
 "use strict";
 
 import * as input from "../input.js";
+import * as map from "./resource_map.js";
 
 const kUPS = 60;
 const kMPF = 1000 / kUPS;
@@ -29,10 +30,12 @@ function loopOnce() {
     }
 }
 
-function start(scene) {
+async function start(scene) {
     if (mLoopRunning) {
         throw new Error("Loop is already running");
     }
+
+    await map.waitOnPromises();
 
     mCurrentScene = scene;
     mCurrentScene.init();

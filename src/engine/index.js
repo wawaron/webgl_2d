@@ -4,6 +4,7 @@ import * as glSys from "./core/gl.js";
 import * as vertexBuffer from "./core/vertex_buffer.js";
 import * as shaderResources from "./core/shader_resources.js";
 import * as input from "./input.js";
+import * as text from "./resources/text.js";
 import Camera from "./camera.js";
 import Transform from "./transform.js";
 import Renderable from "./renderable.js";
@@ -22,4 +23,7 @@ function clearCanvas(color) {
     gl.clear(gl.COLOR_BUFFER_BIT);
 }
 
-export default { clearCanvas, init, input, Camera, Transform, Renderable };
+export default { 
+    clearCanvas, init, input, text,
+    Camera, Transform, Renderable
+};
