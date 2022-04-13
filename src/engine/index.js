@@ -5,6 +5,7 @@ import * as vertexBuffer from "./core/vertex_buffer.js";
 import * as shaderResources from "./core/shader_resources.js";
 import * as input from "./input.js";
 import * as text from "./resources/text.js";
+import * as xml from "./resources/xml.js";
 import Camera from "./camera.js";
 import Transform from "./transform.js";
 import Renderable from "./renderable.js";
@@ -24,6 +25,6 @@ function clearCanvas(color) {
 }
 
 export default { 
-    clearCanvas, init, input, text,
+    clearCanvas, init, input, text, xml,
     Camera, Transform, Renderable
 };

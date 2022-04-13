@@ -35,11 +35,12 @@ async function start(scene) {
         throw new Error("Loop is already running");
     }
 
+    mCurrentScene = scene;
+    mCurrentScene.load();
+
     await map.waitOnPromises();
 
-    mCurrentScene = scene;
     mCurrentScene.init();
-
     mPrevTime = performance.now();
     mLagTime = 0.0;
     mLoopRunning = true;
