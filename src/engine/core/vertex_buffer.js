@@ -19,4 +19,11 @@ function init() {
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(mVerticesOfSquare), gl.STATIC_DRAW);
 }
 
-export { get, init };
+function cleanUp() {
+    if (mGLVertexBuffer !== null) {
+        glSys.get().deleteBuffer(mGLVertexBuffer);
+        mGLVertexBuffer = null;
+    }
+}
+
+export { cleanUp, get, init };

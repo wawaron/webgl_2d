@@ -52,4 +52,12 @@ function stop() {
     cancelAnimationFrame(mFrameID);
 }
 
-export { start, stop };
+function cleanUp() {
+    if (mLoopRunning) {
+        stop();
+        mCurrentScene.unload();
+        mCurrentScene = null;
+    }
+}
+
+export { cleanUp, start, stop };

@@ -28,4 +28,10 @@ function init() {
 
 function getConstColorShader() { return mConstColorShader; }
 
-export { getConstColorShader, init };
+function cleanUp() {
+    mConstColorShader.cleanUp();
+    text.unload(kSimpleVS);
+    text.unload(kSimpleFS);
+}
+
+export { cleanUp, getConstColorShader, init };
