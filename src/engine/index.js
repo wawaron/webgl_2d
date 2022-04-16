@@ -7,6 +7,7 @@ import * as input from "./input.js";
 import * as text from "./resources/text.js";
 import * as xml from "./resources/xml.js";
 import * as loop from "./core/loop.js";
+import * as audio from "./resources/audio.js";
 import Camera from "./camera.js";
 import Transform from "./transform.js";
 import Renderable from "./renderable.js";
@@ -18,6 +19,7 @@ function init(htmlCanvasID) {
     vertexBuffer.init();
     shaderResources.init();
     input.init();
+    audio.init();
 }
 
 function clearCanvas(color) {
@@ -28,6 +30,7 @@ function clearCanvas(color) {
 
 function cleanUp() {
     loop.cleanUp();
+    audio.cleanUp();
     input.cleanUp();
     shaderResources.cleanUp();
     vertexBuffer.cleanUp();
@@ -35,6 +38,6 @@ function cleanUp() {
 }
 
 export default { 
-    cleanUp, clearCanvas, init, input, text, xml,
+    audio, cleanUp, clearCanvas, init, input, text, xml,
     Camera, Transform, Renderable, Scene
 };

@@ -6,9 +6,22 @@ import BlueLevel from "./blue_level.js";
 class Client extends engine.Scene {
     constructor() {
         super();
+        this.mBackgroundAudio = "assets/sounds/bg_clip.mp3";
+        this.mCue = "assets/sounds/my_game_cue.wav";
         this.mCamera = null;
         this.mHero = null;
         this.mSupport = null;
+    }
+
+    load() {
+        engine.audio.load(this.mBackgroundAudio);
+        engine.audio.load(this.mCue);
+    }
+
+    unload() {
+        engine.audio.stopBackground();
+        engine.audio.unload(this.mBackgroundAudio);
+        engine.audio.unload(this.mCue);
     }
 
     init() {
@@ -28,6 +41,8 @@ class Client extends engine.Scene {
         this.mHero.setColor([0, 0, 1, 1]);
         this.mHero.getTransform().setPosition(20, 60);
         this.mHero.getTransform().setSize(2, 3);
+
+        engine.audio.playBackground(this.mBackgroundAudio, 1.0);
     }
 
     draw() {
@@ -42,6 +57,8 @@ class Client extends engine.Scene {
         let deltaX = 0.05;
 
         if (engine.input.isKeyPressed(engine.input.keys.Right)) {
+            engine.audio.playCue(this.mCue, 0.5);
+            engine.audio.incBackgroundVolume(0.05);
             transform.incXPosBy(deltaX);
             if (transform.getXPos() > 30) {
                 transform.setPosition(12, 60);
@@ -49,6 +66,8 @@ class Client extends engine.Scene {
         }
 
         if (engine.input.isKeyPressed(engine.input.keys.Left)) {
+            engine.audio.playCue(this.mCue, 1.5);
+            engine.audio.incBackgroundVolume(-0.05);
             transform.incXPosBy(-deltaX);
             if (transform.getXPos() < 11) {
                 this.next();
